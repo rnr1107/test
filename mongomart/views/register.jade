@@ -1,0 +1,35 @@
+doctype html
+title= title
+|<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+|<link href="/static/css/shop-homepage.css" rel="stylesheet">
+body
+ include ./includes/navRegister.jade
+ div.container
+  div.row
+   if error_message.length != ''
+    h4(style="color:red") #{error_message}
+   if message.length != ''
+    h4 #{message}
+  div.row
+   h4 Provide the following details
+   hr
+   div.col-md-5
+    form(action="/register" method="post")
+     div.form-group
+       label(for="fname") First Name:
+       input(type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name")
+     div.form-group
+       label(for="lname") Last Name:
+       input(type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name")
+     div.form-group
+       label(for="username") Username:
+       input(type="text" class="form-control" id="username" name="username" placeholder="Enter display name")
+     div.form-group
+       label(for="password") Password:
+       input(type="password" class="form-control" id="password" name="password" placeholder="Enter password")
+     div.form-group
+       label(for="password") Email:
+       input(type="email" class="form-control" id="email" name="email" placeholder="Enter your email id")
+     button.btn.btn-primary.pull-right(type="submit") Signup
+      span.glyphicon.glyphicon-chevron-right
+include ./includes/footer.jade

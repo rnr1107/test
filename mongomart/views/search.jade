@@ -1,0 +1,42 @@
+doctype html
+<title>MongoMart - Shop MongoDB Gear</title>
+|<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+|<link href="/static/css/shop-homepage.css" rel="stylesheet">
+body
+ include ./includes/nav.jade
+ div.container
+  div.row
+   div.col-md-12
+    ol.breadcrumb
+     li
+      a(href="/") Home
+     li Search
+     li.active #{queryString}
+  div.row
+   div.col-md-12
+    each item in items
+     div.row
+      div.col-md-7
+       a(href="/item/#{item._id}")
+        img.img-responsive(src="/static/#{item.img_url}")
+      div.col-md-5
+       h3
+        a(href="/item/#{item._id}") #{item.title}
+       h4 #{item.slogan}
+       p #{item.description}
+       a.btn.btn-primary(href="/item/#{item._id}") View Product
+        span.glyphicon.glyphicon-chevron-right
+      hr
+    div.row.text-center
+      div.col-lg-12
+       ul.pagination
+        each val in pages
+         if page === val
+          li.active
+           a(href="/search?page=#{val}&query=#{queryString}") #{val+1}
+         if page != val
+          li.inactive
+           a(href="/search?page=#{val}&query=#{queryString}") #{val+1}
+    div(style="text-align:center")
+       i #{itemCount} Products
+ include ./includes/footer.jade

@@ -1,0 +1,98 @@
+doctype html
+title #{item.title}} - MongoMart
+|<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+|<link href="/static/css/shop-homepage.css" rel="stylesheet">
+body
+ include ./includes/nav.jade
+ div.container
+  div.row
+   div.row
+    div.col-md-12
+     ol.breadcrumb
+      li
+       a(href="/") Home
+      li
+       a(href="/?category=#{item.category}") #{item.category}
+      li.active #{item.title}
+   div.row
+    div.col-lg-12
+     h1.page-header(style="margin-top: 0px;") #{item.title}
+      small #{item.slogan}
+   div.row
+    div.col-md-8
+     img.img-responsive(src="/static/#{item.img_url}" alt="")
+    div.col-md-4
+     h3 Product Description
+     div.ratings(style="padding-left: 0px;")
+      if reviews.length === 1
+       p.pull-right #{numReviews} review
+      if reviews.length > 1
+       p.pull-right #{numReviews} reviews
+      p
+       each num in [1,2,3,4,5,6]
+        if stars >= num
+         span.glyphicon.glyphicon-star
+        if stars < num
+         span.glyphicon.glyphicon-star-empty
+     p #{item.description}
+     form(action="/user/#{userId}/cart/items/#{item._id}" role="form" method="post")
+      button.btn.btn-primary(type="submit") Add to cart
+       span.glyphicon.glyphicon-chevron-right
+   div.row
+    div.col-lg-12
+     h3.page-header Latest Reviews
+    div.col-lg-12
+     if item.reviews === undefined
+      div
+       div
+        h4.media-heading No reviews added as of now
+        hr
+     if item.reviews != undefined
+      each review in item.reviews
+       div
+        div
+         h4.media-heading #{review.name}
+          small #{review.date}
+         div.ratings(style="padding-left: 0px;")
+          each num in [1,2,3,4,5,6]
+           if num <= review.stars
+            span.glyphicon.glyphicon-star
+           if num > review.stars
+            span.glyphicon.glyphicon-star-empty
+         p #{review.comment}
+       hr
+   div.well
+    h4 Add a Review:
+    form(action="/item/#{item._id}/reviews" role="form" method="post")
+     div.form-group
+      label(for="review") Review:
+      textarea(name="review" class="form-control" rows="3")
+      div.form-group
+       label(for="name") Name:
+       input(type="text" class="form-control" id="name" name="name" placeholder="Enter display name")
+      div.form-group
+       label.radio-inline
+       input(type="radio", name="stars" ,id="stars", value="1")
+       |1 star
+       label.radio-inline
+       input(type="radio", name="stars" ,id="stars", value="2")
+       |2 star
+       label.radio-inline
+       input(type="radio" ,name="stars", id="stars", value="3")
+       |3 star
+       label.radio-inline
+       input(type="radio", name="stars", id="stars" ,value="4")
+       |4 star
+       label.radio-inline
+       input(type="radio", name="stars", id="stars", value="5" ,checked)
+       |5 star
+      button( type="submit" class="btn btn-primary") Submit Review
+   hr
+   div.row
+    div.col-lg-12
+     h3.page-header Related Products
+   each relatedItem in relatedItems
+    div.col-sm-3.col-xs-6
+     a(href="/item/#{relatedItem._id}")
+      img.img-responsive.portfolio-item(src="/static/#{relatedItem.img_url}" alt="")
+ include ./includes/footer.jade
