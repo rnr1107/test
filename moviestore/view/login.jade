@@ -1,0 +1,15 @@
+doctype html
+title= title
+body
+form(action = "/login", method = "POST")
+ <br/><br/><br/><br/>
+ fieldset
+  legend Login Details
+  <br/><br/>
+  | Username :
+  input#username(type = "text", name = "username" maxlength="10" size="10")
+  | <br/><br/><br/>
+  | Password :
+  input#pwd(type = "password", name = "pwd" maxlength="8" size="8")
+  | <br/><br/><br/>
+  input#btn(type="submit", name="btn",value="Login")

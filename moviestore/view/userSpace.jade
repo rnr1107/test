@@ -1,0 +1,17 @@
+doctype html
+title= title
+body
+
+ h4 #{uname}, #{email}
+ | <br/><br/>
+ a#searchid(href="/search?id='#{uname}'") Search
+ p Movies you registered
+ if(message !== "")
+ p #{message}
+ - if(message === ""){
+ table
+  each movie in mList
+   tr
+    td #{movie.title}
+    td #{movie.year}
+- }

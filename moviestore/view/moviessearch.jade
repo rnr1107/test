@@ -1,0 +1,61 @@
+doctype html
+title= title
+body
+|<script type="text/javascript">
+| var eachRecord = [];
+| var hidelem = [];
+| function addSelectedMovies(elem){
+|    alert(elem);
+|    if(hidelem.indexOf(elem+'~') < 0){
+|      hidelem.push(elem+'~');
+|      document.getElementById("elemvar").value = hidelem;
+|    }
+|    return false;
+|}
+| function submitSelectedMovies(){
+|  document.getElementById("errorid").setAttribute("style","color:red;display:none");
+|  var elem = document.getElementById("elemvar").value;
+|  //alert(elem);
+|  if(elem === "") {
+|   document.getElementById("errorid").setAttribute("style","color:red;display:block");
+|   return false;
+|  }else{
+|   document.getElementById("movieid").submit();
+|   return true;
+|  }
+|};
+|</script>
+h4 Movies collection
+|<br/><br/>
+form#movieid( method="POST" action="/search")
+ input#listvar(type="hidden", value="#{mList}", name="listvar")
+ input#elemvar(type="hidden", value="", name="elemvar")
+ input#userid(type="hidden", value="#{userid}", name="userid")
+ if(mList.length == 0)
+ p No movies in the collection
+ if(mList.length > 0)
+ p List is given below
+ table(border=1,width=0)
+  thead
+   tr
+    td name
+    td year of release
+    td rated
+    td runtime
+    td director
+    td info
+    td add
+  tbody
+  each movie in mList
+   tr
+    td #{movie.title}
+    td #{movie.year}
+    td #{movie.rated}
+    td #{movie.runtime}
+    td #{movie.director}
+    td #{movie.awards.text}
+    td: a(href="javascript:addSelectedMovies(\"#{movie.title}\"+'_'+'#{movie.year}'+'_'+'#{movie.rated}'+'_'+'#{movie.runtime}'+'_'+'#{movie.director}'+'_'+\"#{movie.awards.text}\");") add
+| <br/><br/>
+| <div id="errorid" style="color:red;display:none">Please add and then submit</div>
+
+input#submitbtn(type="submit", value="Add to your list" ,name="submitbtn" onclick="submitSelectedMovies()")
